@@ -11,6 +11,7 @@ const Test = () =>{
 
 const Cool = () => {
     const [data, setData] = useState([]);
+    const [text, setText] = useState('REST API');
     const URL = 'http://ui-base.herokuapp.com/api/users/get';
 
     useEffect(() => {
@@ -36,7 +37,9 @@ const Cool = () => {
             fontSize: 34,
             textAlign: "center"
         }}>
-            REST API
+            {text}
+            <br />
+            <input value={text} onChange={(e) => setText(e.target.value)} />
             <hr/>
             {loading}
 
