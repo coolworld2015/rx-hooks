@@ -17,6 +17,17 @@ const Test = () => {
     )
 };
 
+const User = ({user}) => {
+    return (
+        <div style={{
+            padding: '20px',
+            border: '1px solid #cccc'
+        }}
+             key={user.id}>{user.id} - {user.name} - {user.pass}
+        </div>
+    )
+};
+
 const Cool = () => {
     const [data, setData] = useState([]);
     const [text, setText] = useState('REST API');
@@ -55,12 +66,8 @@ const Cool = () => {
                 {loading}
 
                 {
-                    data.map(el => (
-                        <div style={{
-                            padding: '20px',
-                            border: '1px solid #cccc'
-                        }}
-                            key={el.id}>{el.id} - {el.name} - {el.pass}</div>
+                    data.map(user => (
+                        <User user={user} key={user.id}/>
                     )
                     )}
             </div>
