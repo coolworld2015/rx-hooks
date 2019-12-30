@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer} from "react";
+import React, {useState, useEffect, useReducer, useContext} from "react";
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
@@ -8,11 +8,19 @@ const usersReducer = (state, action) => {
         case 'GET_USERS':
             return action.users;
 
+        case 'DELETE_USER':
+            return [
+                ...state,
+                { id: action.id }
+            ];
+
         default: return state
     }
 };
 
-const Users = () => {
+const UsersContext = React.createContext();
+
+const App = () => {
     const [users, dispatch ] = useReducer(usersReducer, []);
     const [text, setText] = useState('REST API');
 
@@ -37,7 +45,7 @@ const Users = () => {
     }
 
     return (
-        <>
+        <UsersContext.Provider value={{ users, dispatch }}>
             <div style={{
                 fontSize: 34,
                 textAlign: "center"
@@ -46,15 +54,22 @@ const Users = () => {
                 <br/>
                 <input value={text} onChange={(e) => setText(e.target.value)}/>
                 <hr/>
+
                 {loading}
 
-                {
-                    users.map(user => (
-                        <User user={user} key={user.id}/>
-                    )
-                    )}
+                <Users />
             </div>
-        </>
+        </UsersContext.Provider>
+    )
+};
+
+const Users = () => {
+    const { users } = useContext(UsersContext);
+
+    return (
+        users.map(user => (
+            <User user={user} key={user.id}/>
+        ))
     )
 };
 
@@ -68,16 +83,17 @@ const User = ({ user }) => {
     }, []);
 
     return (
-        <div style={{
-            padding: '20px',
-            border: '1px solid #cccc'
-        }}>
+        <div style={{ padding: '20px', border: '1px solid #cccc' }}>
+
             {user.id} - {user.name} - {user.pass}
+
+            <button style={{ padding: '10px', marginLeft: '10px' }}
+                onClick={() => null}>x</button>
         </div>
     )
 };
 
-const Cool = () => {
+/*const Cool = () => {
     const [data, setData] = useState([]);
     const [text, setText] = useState('REST API');
     const URL = 'http://ui-base.herokuapp.com/api/users/get';
@@ -120,7 +136,7 @@ const Cool = () => {
             </div>
         </>
     )
-};
+};*/
 
-ReactDOM.render(<Users />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 serviceWorker.unregister();
