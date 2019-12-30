@@ -1,11 +1,19 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useReducer} from "react";
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-const Test = () =>{
+const Test = () => {
+    useEffect(() => {
+        console.log('Did mount');
+
+        return () => {
+            console.log('Will unmount');
+        }
+    }, []);
+
     return (
-        <h1>Test</h1>
+        <h1 style={{textAlign: "center"}}>Test</h1>
     )
 };
 
@@ -33,28 +41,32 @@ const Cool = () => {
     }
 
     return (
-        <div style={{
-            fontSize: 34,
-            textAlign: "center"
-        }}>
-            {text}
-            <br />
-            <input value={text} onChange={(e) => setText(e.target.value)} />
-            <hr/>
-            {loading}
+        <>
+            <Test/>
 
-            {
-                data.map(el => (
-                    <p key={el.id}>{el.id} - {el.name}</p>
-                )
-            )}
-        </div>
+            <div style={{
+                fontSize: 34,
+                textAlign: "center"
+            }}>
+                {text}
+                <br/>
+                <input value={text} onChange={(e) => setText(e.target.value)}/>
+                <hr/>
+                {loading}
+
+                {
+                    data.map(el => (
+                        <div style={{
+                            padding: '20px',
+                            border: '1px solid #cccc'
+                        }}
+                            key={el.id}>{el.id} - {el.name} - {el.pass}</div>
+                    )
+                    )}
+            </div>
+        </>
     )
 };
 
-ReactDOM.render(<Cool />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+ReactDOM.render(<Cool/>, document.getElementById('root'));
 serviceWorker.unregister();
