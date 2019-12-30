@@ -23,6 +23,7 @@ const UsersContext = React.createContext();
 const UsersApp = () => {
     const [users, dispatch ] = useReducer(usersReducer, []);
     const [text, setText] = useState('REST API');
+    const [count, setCount] = useState(0);
 
     const getUsers = () => {
         fetch('http://ui-base.herokuapp.com/api/users/get')
@@ -99,7 +100,10 @@ const UsersApp = () => {
             }}>
                 {text}
                 <br/>
-                <input value={text} onChange={(e) => setText(e.target.value)}/>
+                <input value={text} onChange={(e) => setText(e.target.value)}/><hr />
+                { count }
+                <button style={{ padding: '10px', marginLeft: '10px' }}
+                        onClick={() => setCount(count + 1)}>+</button>
                 <hr/>
 
                 {loading}
