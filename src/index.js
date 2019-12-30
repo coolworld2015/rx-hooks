@@ -20,7 +20,7 @@ const usersReducer = (state, action) => {
 
 const UsersContext = React.createContext();
 
-const App = () => {
+const UsersApp = () => {
     const [users, dispatch ] = useReducer(usersReducer, []);
     const [text, setText] = useState('REST API');
 
@@ -57,13 +57,13 @@ const App = () => {
 
                 {loading}
 
-                <Users />
+                <UsersList />
             </div>
         </UsersContext.Provider>
     )
 };
 
-const Users = () => {
+const UsersList = () => {
     const { users } = useContext(UsersContext);
 
     return (
@@ -74,6 +74,8 @@ const Users = () => {
 };
 
 const User = ({ user }) => {
+    const { dispatch } = useContext(UsersContext);
+
     useEffect(() => {
         console.log('Did mount');
 
@@ -88,7 +90,7 @@ const User = ({ user }) => {
             {user.id} - {user.name} - {user.pass}
 
             <button style={{ padding: '10px', marginLeft: '10px' }}
-                onClick={() => null}>x</button>
+                onClick={() => dispatch({ type: 'GET_USERS', users: [] })}>x</button>
         </div>
     )
 };
@@ -138,5 +140,5 @@ const User = ({ user }) => {
     )
 };*/
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<UsersApp />, document.getElementById('root'));
 serviceWorker.unregister();
