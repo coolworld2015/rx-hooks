@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useReducer, useContext} from "react";
 import ReactDOM from 'react-dom';
 import './index.css';
-import * as serviceWorker from './serviceWorker';
 
 const usersReducer = (state, action) => {
     switch (action.type) {
@@ -199,4 +198,7 @@ const User = ({ user }) => {
 };*/
 
 ReactDOM.render(<UsersApp />, document.getElementById('root'));
-serviceWorker.unregister();
+
+/*
+const a = {'id':1, 'name': 2, 'key':777};
+const {id, ...rest } = a;*/
