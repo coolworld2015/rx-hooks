@@ -5,18 +5,21 @@ export function incrementAction() {
         type: INCREMENT
     };
 }
+
 export function decreaseAction() {
     return {
         type: DECREASE
     };
 }
-export function increment() {
+
+export function incrementThunk() {
     return function(dispatch, getState) {
         dispatch(incrementAction());
         console.log(getState());
     };
 }
-export function decrement() {
+
+export function decrementThunk() {
     return function(dispatch, getState) {
         dispatch(decreaseAction());
         console.log(getState());

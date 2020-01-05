@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { increment, decrement } from "./actions";
+import { incrementThunk, decrementThunk } from "./actions";
 
 export const Counter = () => {
     const dispatch = useDispatch();
@@ -8,14 +8,12 @@ export const Counter = () => {
     return (
         <div style={{textAlign: 'center'}}>
             <h1>{counter}</h1>
-            <br />
-            <br />
             <button onClick={() => dispatch({ type: "INCREMENT" })}>+</button>
             <button onClick={() => dispatch({ type: "DECREASE" })}>-</button>
             <br />
             <br />
-            <button onClick={() => dispatch(increment())}>+</button>
-            <button onClick={() => dispatch(decrement())}>-</button>
+            <button onClick={() => dispatch(incrementThunk())}>+</button>
+            <button onClick={() => dispatch(decrementThunk())}>-</button>
         </div>
     );
 };

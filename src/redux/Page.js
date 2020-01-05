@@ -1,17 +1,16 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-
-import { increment, decrement } from "./actions";
+import { incrementThunk, decrementThunk } from "./actions";
 
 class Page extends PureComponent {
     render() {
-        const { value, increment, decrement } = this.props;
+        const { value, incrementThunk, decrementThunk } = this.props;
         return (
             <div style={{textAlign: 'center'}}>
                 <hr />
                 <h1>{value}</h1>
-                <button onClick={increment}>+</button>
-                <button onClick={decrement}>-</button>
+                <button onClick={incrementThunk}>+</button>
+                <button onClick={decrementThunk}>-</button>
             </div>
         );
     }
@@ -29,5 +28,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { increment, decrement }
+    { incrementThunk, decrementThunk }
 )(Page);
