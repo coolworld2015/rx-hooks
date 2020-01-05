@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 
 import store from "./store";
-import Page from "./Page";
+import PageClass from "./Page";
 import { Counter } from "./Counter";
 
 import { decreaseAction } from "./actions";
@@ -10,7 +10,7 @@ import { decreaseAction } from "./actions";
 const ReduxApp = () => (
     <Provider store={store}>
         <Counter />
-        <Page />
+        <PageClass />
     </Provider>
 );
 

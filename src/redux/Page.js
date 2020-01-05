@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { incrementThunk, decrementThunk } from "./actions";
 
-class Page extends PureComponent {
+class PageClass extends PureComponent {
     render() {
         const { value, incrementThunk, decrementThunk } = this.props;
         return (
@@ -29,4 +29,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     { incrementThunk, decrementThunk }
-)(Page);
+)(PageClass);
