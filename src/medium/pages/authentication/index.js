@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 const Authentication = () => {
-  const [user, setUser] = useState({name: ''})
+  const [user, setUser] = useState({name: ''});
 
   const handleCounter = () => {
     console.log('handleCounter');
