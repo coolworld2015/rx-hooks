@@ -2,5 +2,6 @@ import React from "react";
 import ReactDOM from 'react-dom';
 
 import UsersApp from './react/UserApp';
+import ReduxApp from './redux/index';
 
-ReactDOM.render(<UsersApp />, document.getElementById('root'));
+ReactDOM.render(<ReduxApp />, document.getElementById('root'));
