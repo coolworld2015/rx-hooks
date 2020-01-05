@@ -2,15 +2,14 @@ import React from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 import Routes from './routes';
+import Topbar from './components/topbar';
 
 const MediumApp = () => {
   return (
-    <div className="App">
-      <h3>Welcome here is our app</h3>
-      <Router>
-        <Routes />
-      </Router>
-    </div>
+    <Router>
+      <Topbar />
+      <Routes />
+    </Router>
   )
 };
 
