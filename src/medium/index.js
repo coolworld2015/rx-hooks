@@ -1,15 +1,21 @@
-import React from 'react';
-import {BrowserRouter as Router} from 'react-router-dom';
+import React from 'react'
+import {BrowserRouter as Router} from 'react-router-dom'
 
-import Routes from './routes';
-import Topbar from './components/topbar';
+import Routes from 'routes'
+import Topbar from 'components/topbar'
+import {CurrentUserProvider} from 'contexts/currentUser'
+import CurrentUserChecker from 'components/currentUserChecker'
 
 const MediumApp = () => {
   return (
-    <Router>
-      <Topbar />
-      <Routes />
-    </Router>
+    <CurrentUserProvider>
+      <CurrentUserChecker>
+        <Router>
+          <Topbar />
+          <Routes />
+        </Router>
+      </CurrentUserChecker>
+    </CurrentUserProvider>
   )
 };
 
