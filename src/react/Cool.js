@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 const Cool = () => {
     const [data, setData] = useState([]);
@@ -42,6 +42,17 @@ const Cool = () => {
                     )}
             </div>
         </>
+    )
+};
+
+const User = ({ user }) => {
+
+    return (
+        <div style={{ padding: '20px', border: '1px solid #cccc' }}>
+
+            {user.id} - {user.name} - {user.pass}
+
+        </div>
     )
 };
 

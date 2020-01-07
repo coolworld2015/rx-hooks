@@ -17,7 +17,7 @@ const usersReducer = (state, action) => {
 
 const UsersContext = React.createContext();
 
-const UsersApp = () => {
+const Users = () => {
     const [users, dispatch ] = useReducer(usersReducer, []);
     const [text, setText] = useState('REST API');
     const [count, setCount] = useState(0);
@@ -150,7 +150,7 @@ const UsersList = () => {
     )
 };
 
-export default UsersApp;
+export default Users;
 
 /*
 const a = {'id':1, 'name': 2, 'key':777};
