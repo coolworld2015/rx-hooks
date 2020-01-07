@@ -1,7 +1,16 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {Link} from "react-router-dom";
+import {UsersContext} from "./Users";
+import {AppContext} from "./index";
+import {Redirect} from 'react-router-dom';
 
 const UserEdit = props => {
+    const [isBackClicked, setIsBackClicked] = useState(false);
+    const goBack = ((event) => {
+        event.preventDefault();
+        setIsBackClicked(true);
+    });
+
     /*    const isLogin = props.match.path === '/login'
         const pageTitle = isLogin ? 'Sign In' : 'Sign Up'
         const descriptionLink = isLogin ? '/register' : '/login'
@@ -9,20 +18,33 @@ const UserEdit = props => {
         const apiUrl = isLogin ? '/users/login' : '/users'
         const [email, setEmail] = useState('')
         const [password, setPassword] = useState('')
-        const [username, setUsername] = useState('')
+
         const [isSuccessfullSubmit, setIsSuccessfullSubmit] = useState(false)
         const [{isLoading, response, error}, doFetch] = useFetch(apiUrl)
         const [, setToken] = useLocalStorage('token')
         const [, dispatch] = useContext(CurrentUserContext)*/
 
+    const [username, setUsername] = useState('');
+
+    const {userItem} = useContext(AppContext);
+
+    useEffect(() => {
+        console.log('values', userItem);
+        setUsername(userItem.id);
+
+        return () => {
+            console.log('Will unmount');
+        }
+    }, []);
+
+
     const pageTitle = 'pageTitle';
-    const username = 'username';
     const email = 'email';
     const password = 'password';
     const isLoading = false;
 
     const handleSubmit = event => {
-        event.preventDefault()
+        event.preventDefault();
 
         /*const user = isLogin ? {email, password} : {email, password, username}
 
@@ -49,6 +71,10 @@ const UserEdit = props => {
             return <Redirect to="/" />
         }*/
 
+    if (isBackClicked) {
+        return <Redirect to="/users"/>
+    }
+
     return (
         <div className="auth-page">
             <div className="container page">
@@ -61,22 +87,22 @@ const UserEdit = props => {
                         {/*                        {error && <BackendErrorMessages backendErrors={error.errors} />}*/}
                         <form onSubmit={handleSubmit}>
                             <fieldset>
-                                    <fieldset className="form-group">
-                                        <input
-                                            type="text"
-                                            className="form-control form-control-lg"
-                                            placeholder="Username"
-                                            value={username}
-                                            /*onChange={e => setUsername(e.target.value)}*/
-                                        />
-                                    </fieldset>
+                                <fieldset className="form-group">
+                                    <input
+                                        type="text"
+                                        className="form-control form-control-lg"
+                                        placeholder="Username"
+                                        value={username}
+                                        /*onChange={e => setUsername(e.target.value)}*/
+                                    />
+                                </fieldset>
                                 <fieldset className="form-group">
                                     <input
                                         type="email"
                                         className="form-control form-control-lg"
                                         placeholder="Email"
                                         value={email}
-                                       /* onChange={e => setEmail(e.target.value)}*/
+                                        /* onChange={e => setEmail(e.target.value)}*/
                                     />
                                 </fieldset>
                                 <fieldset className="form-group">
@@ -91,9 +117,18 @@ const UserEdit = props => {
                                 <button
                                     disabled={isLoading}
                                     className="btn btn-lg btn-primary pull-xs-right"
+                                    type="button"
+                                    onClick={(e) => goBack(e)}
+                                >
+                                    Back
+                                </button>
+
+                                <button
+                                    disabled={isLoading}
+                                    className="btn btn-lg btn-primary pull-xs-right"
                                     type="submit"
                                 >
-                                    {pageTitle}
+                                    Submit
                                 </button>
                             </fieldset>
                         </form>

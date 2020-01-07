@@ -1,6 +1,8 @@
 import React, {useContext, useEffect, useReducer, useState} from "react";
 import {Redirect} from 'react-router-dom';
 
+import {AppContext} from './index';
+
 const usersReducer = (state, action) => {
     switch (action.type) {
         case 'GET_USERS':
@@ -27,7 +29,7 @@ const usersReducer = (state, action) => {
     }
 };
 
-const UsersContext = React.createContext();
+export const UsersContext = React.createContext();
 
 const Users = () => {
     const [users, dispatch ] = useReducer(usersReducer, []);
@@ -134,11 +136,14 @@ const UsersList = () => {
 };
 
 const User = ({ user }) => {
+    const { userItem, setUserItem } = useContext(AppContext);
     const { dispatch, getUsers, deleteUser, addUser } = useContext(UsersContext);
     const [isClicked, setIsClicked] = useState(false);
 
     const goUserEdit = (event) => {
         event.preventDefault();
+        console.log(userItem);
+        setUserItem(user);
         setIsClicked(true)
     };
 
