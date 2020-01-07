@@ -122,7 +122,7 @@ const User = ({ user }) => {
         }
     }, []);
 
-    const clickHendler = () => {
+    const clickHandler = () => {
         addUser('cool');
         //deleteUser(user.id);
         //dispatch({ type: 'GET_USERS', users: [] });
@@ -135,7 +135,7 @@ const User = ({ user }) => {
             {user.id} - {user.name} - {user.pass}
 
             <button style={{ padding: '10px', marginLeft: '10px' }}
-                    onClick={() => clickHendler()}>x</button>
+                    onClick={() => clickHandler()}>x</button>
         </div>
     )
 };
