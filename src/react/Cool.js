@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
+import {Redirect} from 'react-router-dom';
 
 const Cool = () => {
     const [data, setData] = useState([]);
@@ -45,10 +46,21 @@ const Cool = () => {
     )
 };
 
-const User = ({ user }) => {
+const User = ({user}) => {
+    const [isClicked, setIsClicked] = useState(false);
+
+    const clickHandler = (event) => {
+        event.preventDefault();
+        setIsClicked(true)
+    };
+
+    if (isClicked) {
+        return <Redirect to="/"/>
+    }
 
     return (
-        <div style={{ padding: '20px', border: '1px solid #cccc' }}>
+        <div style={{padding: '20px', border: '1px solid #cccc'}}
+             onClick={(e) => clickHandler(e)}>
 
             {user.id} - {user.name} - {user.pass}
 

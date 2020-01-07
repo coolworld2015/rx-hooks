@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useReducer, useState} from "react";
+import {Redirect} from 'react-router-dom';
 
 const usersReducer = (state, action) => {
     switch (action.type) {
@@ -9,6 +10,17 @@ const usersReducer = (state, action) => {
             return [
                 ...state,
                 { id: action.id }
+            ];
+
+        case 'EDIT_USER':
+            return [
+                ...state,
+                {
+                    id: action.id,
+                    name: action.name,
+                    pass: action.pass,
+                    description: action.description,
+                }
             ];
 
         default: return state
@@ -111,8 +123,24 @@ const Users = () => {
     )
 };
 
+const UsersList = () => {
+    const { users } = useContext(UsersContext);
+
+    return (
+        users.map(user => (
+            <User user={user} key={user.id}/>
+        ))
+    )
+};
+
 const User = ({ user }) => {
     const { dispatch, getUsers, deleteUser, addUser } = useContext(UsersContext);
+    const [isClicked, setIsClicked] = useState(false);
+
+    const goUserEdit = (event) => {
+        event.preventDefault();
+        setIsClicked(true)
+    };
 
     useEffect(() => {
         console.log('Did mount');
@@ -122,31 +150,27 @@ const User = ({ user }) => {
         }
     }, []);
 
-    const clickHandler = () => {
+    const goAddUser = () => {
         addUser('cool');
         //deleteUser(user.id);
         //dispatch({ type: 'GET_USERS', users: [] });
         //getUsers();
     };
 
+    if (isClicked) {
+        return <Redirect to="/user/edit"/>
+    }
+
     return (
-        <div style={{ padding: '20px', border: '1px solid #cccc' }}>
+        <div style={{ padding: '20px', border: '1px solid #cccc' }}
+             onClick={(e) => goUserEdit(e)}>
+
 
             {user.id} - {user.name} - {user.pass}
 
             <button style={{ padding: '10px', marginLeft: '10px' }}
-                    onClick={() => clickHandler()}>x</button>
+                    onClick={() => goAddUser()}>x</button>
         </div>
-    )
-};
-
-const UsersList = () => {
-    const { users } = useContext(UsersContext);
-
-    return (
-        users.map(user => (
-            <User user={user} key={user.id}/>
-        ))
     )
 };
 
