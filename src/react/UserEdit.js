@@ -6,6 +6,7 @@ import {Redirect} from 'react-router-dom';
 
 const UserEdit = props => {
     const [isBackClicked, setIsBackClicked] = useState(false);
+
     const goBack = ((event) => {
         event.preventDefault();
         setIsBackClicked(true);
@@ -24,52 +25,24 @@ const UserEdit = props => {
         const [, setToken] = useLocalStorage('token')
         const [, dispatch] = useContext(CurrentUserContext)*/
 
-    const [username, setUsername] = useState('');
+    const [userId, setUserId] = useState('');
+    const [userName, setUserName] = useState('');
+    const [userPassword, setUserPassword] = useState('');
+    const [userDescription, setUserDescription] = useState('');
 
     const {userItem} = useContext(AppContext);
 
     useEffect(() => {
         console.log('values', userItem);
-        setUsername(userItem.id);
+        setUserId(userItem.id);
+        setUserName(userItem.name);
+        setUserPassword(userItem.pass);
+        setUserDescription(userItem.description);
 
         return () => {
             console.log('Will unmount');
         }
     }, []);
-
-
-    const pageTitle = 'pageTitle';
-    const email = 'email';
-    const password = 'password';
-    const isLoading = false;
-
-    const handleSubmit = event => {
-        event.preventDefault();
-
-        /*const user = isLogin ? {email, password} : {email, password, username}
-
-        doFetch({
-            method: 'post',
-            data: {
-                user
-            }
-        })*/
-        console.log('values', email, password)
-    }
-
-    /*    useEffect(() => {
-            if (!response) {
-                return
-            }
-            console.log('response', response)
-            setToken(response.user.token)
-            setIsSuccessfullSubmit(true)
-            dispatch({type: 'SET_AUTHORIZED', payload: response.user})
-        }, [response, setToken, dispatch])*/
-
-    /*    if (isSuccessfullSubmit) {
-            return <Redirect to="/" />
-        }*/
 
     if (isBackClicked) {
         return <Redirect to="/users"/>
@@ -80,42 +53,52 @@ const UserEdit = props => {
             <div className="container page">
                 <div className="row">
                     <div className="col-md-6 offset-md-3 col-xs-12">
-                        <h1 className="text-xs-center">{pageTitle}</h1>
+                        <h1 className="text-xs-center">{userName}</h1>
                         <p className="text-xs-center">
                             {/*                            <Link to={descriptionLink}>{descriptionText}</Link>*/}
                         </p>
                         {/*                        {error && <BackendErrorMessages backendErrors={error.errors} />}*/}
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={goBack}>
                             <fieldset>
+                                <fieldset className="form-group">
+                                    <input
+                                        type="email"
+                                        className="form-control form-control-lg"
+                                        placeholder="ID"
+                                        value={userId}
+                                        onChange={e => setUserId(e.target.value)}
+                                    />
+                                </fieldset>
                                 <fieldset className="form-group">
                                     <input
                                         type="text"
                                         className="form-control form-control-lg"
                                         placeholder="Username"
-                                        value={username}
-                                        /*onChange={e => setUsername(e.target.value)}*/
+                                        value={userName}
+                                        onChange={e => setUserName(e.target.value)}
                                     />
                                 </fieldset>
+
                                 <fieldset className="form-group">
                                     <input
-                                        type="email"
-                                        className="form-control form-control-lg"
-                                        placeholder="Email"
-                                        value={email}
-                                        /* onChange={e => setEmail(e.target.value)}*/
-                                    />
-                                </fieldset>
-                                <fieldset className="form-group">
-                                    <input
-                                        type="password"
+                                        type="text"
                                         className="form-control form-control-lg"
                                         placeholder="Password"
-                                        value={password}
-                                        /*onChange={e => setPassword(e.target.value)}*/
+                                        value={userPassword}
+                                        onChange={e => setUserPassword(e.target.value)}
+                                    />
+                                </fieldset>
+
+                                <fieldset className="form-group">
+                                    <input
+                                        type="text"
+                                        className="form-control form-control-lg"
+                                        placeholder="Password"
+                                        value={userDescription}
+                                        onChange={e => setUserDescription(e.target.value)}
                                     />
                                 </fieldset>
                                 <button
-                                    disabled={isLoading}
                                     className="btn btn-lg btn-primary pull-xs-right"
                                     type="button"
                                     onClick={(e) => goBack(e)}
@@ -124,7 +107,6 @@ const UserEdit = props => {
                                 </button>
 
                                 <button
-                                    disabled={isLoading}
                                     className="btn btn-lg btn-primary pull-xs-right"
                                     type="submit"
                                 >
