@@ -23,6 +23,7 @@ export const Counter = () => {
             <Button
                 variant="contained"
                 color="primary"
+                disableRipple={false}
                 onClick={() => action("INCREMENT_ASYNC")}
             >
                 INCREMENT
