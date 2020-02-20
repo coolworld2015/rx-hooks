@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,12 +14,31 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
+const CustomPaginationActionsTable = () => {
 const useStyles1 = makeStyles(theme => ({
     root: {
         flexShrink: 0,
         marginLeft: theme.spacing(2.5),
     },
 }));
+
+useEffect(() => {
+    getUsers();
+}, []);
+
+const [rows, setUsers ] = useState( []);
+
+const getUsers = () => {
+    fetch('http://ui-base.herokuapp.com/api/items/get')
+        .then((response) => response.json())
+        .then(users => {
+            console.log(users);
+            setUsers(users)
+        })
+        .catch((error) => {
+            console.log('error ', error);
+        })
+};
 
 function TablePaginationActions(props) {
     const classes = useStyles1();
@@ -76,8 +95,10 @@ function createData(name, calories, fat) {
     return { name, calories, fat };
 }
 
-const rows = [
-    createData('Cupcake', 305, 3.7),
+
+const rows1 = [
+    {name: 'test'}
+    /*createData('Cupcake', 305, 3.7),
     createData('Donut', 452, 25.0),
     createData('Eclair', 262, 16.0),
     createData('Frozen yoghurt', 159, 6.0),
@@ -89,8 +110,9 @@ const rows = [
     createData('Lollipop', 392, 0.2),
     createData('Marshmallow', 318, 0),
     createData('Nougat', 360, 19.0),
-    createData('Oreo', 437, 18.0),
+    createData('Oreo', 437, 18.0),*/
 ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+
 
 const useStyles2 = makeStyles({
     table: {
@@ -98,7 +120,7 @@ const useStyles2 = makeStyles({
     },
 });
 
-export default function CustomPaginationActionsTable() {
+
     const classes = useStyles2();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -158,4 +180,6 @@ export default function CustomPaginationActionsTable() {
             </Table>
         </TableContainer>
     );
-}
+};
+
+export default CustomPaginationActionsTable;
