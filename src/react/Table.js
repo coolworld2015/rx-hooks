@@ -148,8 +148,8 @@ const useStyles2 = makeStyles({
                             <TableCell component="th" scope="row">
                                 {row.name}
                             </TableCell>
-                            <TableCell align="right">{row.calories}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
+                            <TableCell align="right">{row.phone}</TableCell>
+                            <TableCell align="right">{row.index}</TableCell>
                         </TableRow>
                     ))}
 
@@ -162,7 +162,7 @@ const useStyles2 = makeStyles({
                 <TableFooter>
                     <TableRow>
                         <TablePagination
-                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                            rowsPerPageOptions={[5, 10, 25, 50, 100, { label: 'All', value: -1 }]}
                             colSpan={3}
                             count={rows.length}
                             rowsPerPage={rowsPerPage}
