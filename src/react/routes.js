@@ -5,6 +5,7 @@ import Users, {UsersContext} from './Users';
 import Cool from './Cool';
 import UserEdit from './UserEdit';
 import Table from './Table';
+import PhoneEdit from './PhoneEdit';
 
 const Routes = () => {
   return (
@@ -14,6 +15,7 @@ const Routes = () => {
       <Route path="/users" component={Users} />
       <Route path="/cool" component={Cool} />
       <Route path="/user/edit" component={UserEdit} />
+      <Route path="/phone/edit" component={PhoneEdit} />
 {/*      <Route path="/profiles/:slug" component={UserProfile} />
       <Route path="/profiles/:slug/favorites" component={UserProfile} />*/}
     </Switch>

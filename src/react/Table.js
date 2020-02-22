@@ -159,7 +159,7 @@ const CustomPaginationActionsTable = () => {
     };
 
     if (isClicked) {
-        return <Redirect to="/user/edit"/>
+        return <Redirect to="/phone/edit"/>
     }
 
     return (
