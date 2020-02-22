@@ -1,12 +1,16 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Redirect} from 'react-router-dom';
+import {AppConfig} from "./index";
 
 const Cool = () => {
     const [data, setData] = useState([]);
     const [text, setText] = useState('REST API');
     const URL = 'http://ui-base.herokuapp.com/api/users/get';
+    const {config, setConfig} = useContext(AppConfig);
 
     useEffect(() => {
+        console.log(config)
+        setConfig({cool: 'table'})
         fetch(URL)
             .then((response) => response.json())
             .then(response => {
@@ -17,6 +21,8 @@ const Cool = () => {
                 console.log('error ' + error);
             })
     }, []);
+
+    console.log(config)
 
     let loading = null;
 

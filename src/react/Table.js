@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useReducer, useState} from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,23 +17,24 @@ import {TextField} from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
+import {AppConfig} from "./index";
+import {Redirect} from 'react-router-dom';
 
 const CustomPaginationActionsTable = () => {
-    const useStyles1 = makeStyles(theme => ({
-        root: {
-            flexShrink: 0,
-            marginLeft: theme.spacing(2.5),
-        },
-    }));
+    const {config, setConfig} = useContext(AppConfig);
 
     useEffect(() => {
         getUsers();
+        console.log(config)
+        setConfig({cool: 'cool'})
     }, []);
+
+    console.log(config)
 
     const [items, setItems] = useState([]);
     const [rows, setUsers] = useState([]);
-
     const [name, setName] = useState('');
+    const [isClicked, setIsClicked] = useState(false);
 
     const handleCancel = () => {
         console.log(items)
@@ -66,6 +67,13 @@ const CustomPaginationActionsTable = () => {
                 console.log('error ', error);
             })
     };
+
+    const useStyles1 = makeStyles(theme => ({
+        root: {
+            flexShrink: 0,
+            marginLeft: theme.spacing(2.5),
+        },
+    }));
 
     function TablePaginationActions(props) {
         const classes = useStyles1();
@@ -144,6 +152,16 @@ const CustomPaginationActionsTable = () => {
         setPage(0);
     };
 
+    const handleUserEdit = (row) => {
+        console.log(row);
+        setConfig(row)
+        setIsClicked(true)
+    };
+
+    if (isClicked) {
+        return <Redirect to="/user/edit"/>
+    }
+
     return (
         <div>
             <div>
@@ -176,7 +194,7 @@ const CustomPaginationActionsTable = () => {
                                 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : rows
                         ).map(row => (
-                            <TableRow key={row.name}>
+                            <TableRow key={row.name} onClick={() => handleUserEdit(row)}>
                                 <TableCell component="th" scope="row">
                                     {row.name}
                                 </TableCell>

@@ -3,21 +3,28 @@ import {BrowserRouter as Router} from 'react-router-dom'
 
 import Routes from './routes';
 
+export const AppConfig = React.createContext();
 export const AppContext = React.createContext();
 
 const UsersApp = () => {
-    const [userItem, setItem] = useState({});
+    const [config, setConfigItem] = useState({name: 'react hooks'});
+    const setConfig = ((item) => {
+        return setConfigItem(item);
+    });
 
+    const [userItem, setItem] = useState({});
     const setUserItem = ((item) => {
         return setItem(item);
     });
 
     return (
-        <AppContext.Provider value={{userItem, setUserItem}}>
-            <Router>
-                <Routes/>
-            </Router>
-        </AppContext.Provider>
+        <AppConfig.Provider value={{config, setConfig}}>
+            <AppContext.Provider value={{userItem, setUserItem}}>
+                <Router>
+                    <Routes/>
+                </Router>
+            </AppContext.Provider>
+        </AppConfig.Provider>
     )
 };
 

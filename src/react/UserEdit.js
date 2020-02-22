@@ -44,7 +44,7 @@ const UserEdit = props => {
         }
     }, []);
 
-    if (isBackClicked) {
+    if (isBackClicked || !userItem.id) {
         return <Redirect to="/users"/>
     }
 
