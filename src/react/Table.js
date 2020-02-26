@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,10 +18,12 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
 import {AppConfig} from "./index";
+import {AppContext} from "./index";
 import {Redirect} from 'react-router-dom';
 
 const CustomPaginationActionsTable = () => {
     const {state, dispatch} = useContext(AppConfig);
+    const {item, setContextItem} = useContext(AppContext);
 
     useEffect(() => {
         getUsers();
@@ -29,6 +31,8 @@ const CustomPaginationActionsTable = () => {
     }, []);
 
     console.log(state)
+    console.log(item)
+    console.log(setContextItem)
 
     const [items, setItems] = useState([]);
     const [rows, setUsers] = useState([]);
@@ -154,7 +158,7 @@ const CustomPaginationActionsTable = () => {
 
     const handleUserEdit = (row) => {
         console.log(row);
-        //setConfig(row)
+        setContextItem(row);
         setIsClicked(true)
     };
 

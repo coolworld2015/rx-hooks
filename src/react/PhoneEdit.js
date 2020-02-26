@@ -15,21 +15,21 @@ const PhoneEdit = props => {
     const [userPassword, setUserPassword] = useState('');
     const [userDescription, setUserDescription] = useState('');
 
-    const {config} = useContext(AppContext);
+    const {item} = useContext(AppContext);
 
     useEffect(() => {
-        console.log('values', config);
-        setUserId(config.id);
-        setUserName(config.name);
-        setUserPassword(config.phone);
-        setUserDescription(config.description);
+        console.log('values', item);
+        setUserId(item.id);
+        setUserName(item.name);
+        setUserPassword(item.phone);
+        setUserDescription(item.description);
 
         return () => {
             console.log('Will unmount');
         }
     }, []);
 
-    if (isBackClicked || !config.id) {
+    if (isBackClicked || !item.id) {
         return <Redirect to="/table"/>
     }
 

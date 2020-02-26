@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer, useState} from 'react'
+import React, {useContext, useReducer, useState} from 'react'
 import {BrowserRouter as Router} from 'react-router-dom'
 
 import Routes from './routes';
@@ -36,14 +36,14 @@ export const AppContext = React.createContext();
 const UsersApp = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const [userItem, setItem] = useState({});
-    const setUserItem = ((item) => {
+    const [item, setItem] = useState({});
+    const setContextItem = ((item) => {
         return setItem(item);
     });
 
     return (
         <AppConfig.Provider value={{state, dispatch}}>
-            <AppContext.Provider value={{userItem, setUserItem}}>
+            <AppContext.Provider value={{item, setContextItem}}>
                 <Router>
                     <Header/>
                     <Routes/>
