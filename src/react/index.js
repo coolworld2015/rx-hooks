@@ -3,14 +3,38 @@ import {BrowserRouter as Router} from 'react-router-dom'
 
 import Routes from './routes';
 
+const initialState = {
+    method: () => null,
+    counter: 0
+};
+
+const reducer = (state = {}, action) => {
+    switch (action.type) {
+        case "ADD_METHOD":
+            return {
+                ...state,
+                method: action.data
+            };
+        case "INCREASE_COUNTER":
+            return {
+                ...state,
+                counter: state.counter + 1
+            };
+        case "DECREASE_COUNTER":
+            return {
+                ...state,
+                counter: state.counter - 1
+            };
+        default:
+            return state;
+    }
+};
+
 export const AppConfig = React.createContext();
 export const AppContext = React.createContext();
 
 const UsersApp = () => {
-    const [config, setConfigItem] = useState({name: 'react hooks'});
-    const setConfig = ((item) => {
-        return setConfigItem(item);
-    });
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const [userItem, setItem] = useState({});
     const setUserItem = ((item) => {
@@ -18,9 +42,10 @@ const UsersApp = () => {
     });
 
     return (
-        <AppConfig.Provider value={{config, setConfig}}>
+        <AppConfig.Provider value={{state, dispatch}}>
             <AppContext.Provider value={{userItem, setUserItem}}>
                 <Router>
+                    <Header/>
                     <Routes/>
                 </Router>
             </AppContext.Provider>
@@ -29,6 +54,14 @@ const UsersApp = () => {
 };
 
 export default UsersApp;
+
+const Header = () => {
+    const {state, dispatch} = useContext(AppConfig);
+    const {counter} = state;
+    return (
+        <div>Header - {counter}</div>
+    )
+};
 
 /*
 import React, { useContext, useEffect, useReducer } from "react";

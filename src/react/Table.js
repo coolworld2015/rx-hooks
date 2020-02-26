@@ -21,15 +21,14 @@ import {AppConfig} from "./index";
 import {Redirect} from 'react-router-dom';
 
 const CustomPaginationActionsTable = () => {
-    const {config, setConfig} = useContext(AppConfig);
+    const {state, dispatch} = useContext(AppConfig);
 
     useEffect(() => {
         getUsers();
-        console.log(config)
-        setConfig({cool: 'cool'})
+        console.log(state)
     }, []);
 
-    console.log(config)
+    console.log(state)
 
     const [items, setItems] = useState([]);
     const [rows, setUsers] = useState([]);
@@ -49,10 +48,11 @@ const CustomPaginationActionsTable = () => {
 
             return item.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
-        console.log(items)
+/*        console.log(items)
         console.log(rows)
-        console.log(arr)
+        console.log(arr)*/
         setUsers(arr);
+        dispatch({ type: "INCREASE_COUNTER" });
     };
 
     const getUsers = () => {
@@ -154,7 +154,7 @@ const CustomPaginationActionsTable = () => {
 
     const handleUserEdit = (row) => {
         console.log(row);
-        setConfig(row)
+        //setConfig(row)
         setIsClicked(true)
     };
 

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {AppConfig} from "./index";
+import {AppContext} from "./index";
 import {Redirect} from 'react-router-dom';
 
 const PhoneEdit = props => {
@@ -15,7 +15,7 @@ const PhoneEdit = props => {
     const [userPassword, setUserPassword] = useState('');
     const [userDescription, setUserDescription] = useState('');
 
-    const {config} = useContext(AppConfig);
+    const {config} = useContext(AppContext);
 
     useEffect(() => {
         console.log('values', config);
