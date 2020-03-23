@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {AppContext} from "./index";
 import {Redirect} from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 const PhoneEdit = props => {
     const [isBackClicked, setIsBackClicked] = useState(false);
@@ -11,6 +13,9 @@ const PhoneEdit = props => {
     });
 
     const [userId, setUserId] = useState('');
+    const [userIdError, setUserIdError] = useState(false);
+    const [userIdHelperText, setUserIdHelperText] = useState('');
+
     const [userName, setUserName] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const [userDescription, setUserDescription] = useState('');
@@ -29,6 +34,16 @@ const PhoneEdit = props => {
         }
     }, []);
 
+    useEffect(() => {
+        if (userId === '') {
+            setUserIdError(true);
+            setUserIdHelperText('Data required');
+        } else {
+            setUserIdError(false);
+            setUserIdHelperText('');
+        }
+    }, [userId]);
+
     if (isBackClicked || !item.id) {
         return <Redirect to="/table"/>
     }
@@ -43,7 +58,17 @@ const PhoneEdit = props => {
                         </p>
                         <form onSubmit={goBack}>
                             <fieldset>
-                                <fieldset className="form-group">
+                                <TextField
+                                    required
+                                    error={userIdError}
+                                    id="standard-basic"
+                                    label="ID"
+                                    value={userId}
+                                    onChange={e => setUserId(e.target.value)}
+                                    helperText={userIdHelperText}
+                                />
+                            </fieldset>
+{/*                                <fieldset className="form-group">
                                     <input
                                         type="email"
                                         className="form-control form-control-lg"
@@ -80,8 +105,11 @@ const PhoneEdit = props => {
                                         value={userDescription}
                                         onChange={e => setUserDescription(e.target.value)}
                                     />
-                                </fieldset>
-                                <button
+                                </fieldset>*/}
+                                <Button variant="contained" color="primary">
+                                    Primary
+                                </Button>
+{/*                                <button
                                     className="btn btn-lg btn-primary pull-xs-right"
                                     type="button"
                                     onClick={(e) => goBack(e)}
@@ -94,8 +122,8 @@ const PhoneEdit = props => {
                                     type="submit"
                                 >
                                     Submit
-                                </button>
-                            </fieldset>
+                                </button>*/}
+
                         </form>
                     </div>
                 </div>
