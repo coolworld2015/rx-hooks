@@ -59,7 +59,7 @@ const Header = () => {
     const {state, dispatch} = useContext(AppConfig);
     const {counter} = state;
     return (
-        <div>Header - {counter}</div>
+        <div onClick={() => dispatch({ type: "DECREASE_COUNTER" })}>Header - {counter}</div>
     )
 };
 
