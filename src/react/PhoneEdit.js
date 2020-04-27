@@ -106,24 +106,11 @@ const PhoneEdit = props => {
                                         onChange={e => setUserDescription(e.target.value)}
                                     />
                                 </fieldset>*/}
-                                <Button variant="contained" color="primary">
-                                    Primary
-                                </Button>
-{/*                                <button
-                                    className="btn btn-lg btn-primary pull-xs-right"
-                                    type="button"
-                                    onClick={(e) => goBack(e)}
+                                <Button variant="contained" color="primary"
+                                        onClick={(e) => goBack(e)}
                                 >
                                     Back
-                                </button>
-
-                                <button
-                                    className="btn btn-lg btn-primary pull-xs-right"
-                                    type="submit"
-                                >
-                                    Submit
-                                </button>*/}
-
+                                </Button>
                         </form>
                     </div>
                 </div>
