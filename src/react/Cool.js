@@ -1,28 +1,36 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Redirect} from 'react-router-dom';
 import {AppConfig} from "./index";
+import {AppContext} from "./index";
 
 const Cool = () => {
     const [data, setData] = useState([]);
     const [text, setText] = useState('REST API');
-    const URL = 'http://ui-base.herokuapp.com/api/users/get';
-    const {config, setConfig} = useContext(AppConfig);
+    //const URL = 'http://ui-base.herokuapp.com/api/users/get';
+    //const URL = 'https://itunes.apple.com/search?media=&term=cool';
+    const {item, setContextItem} = useContext(AppContext);
 
     useEffect(() => {
-        console.log(config)
-        setConfig({cool: 'table'})
-        fetch(URL)
+        console.log('item - ', item)
+        fetch('https://itunes.apple.com/search?media=movie&term= marvel', {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
             .then((response) => response.json())
             .then(response => {
-                console.log(response);
-                setData(response);
+                console.log(response.results);
+                setData(response.results);
+                setContextItem({...item,...{name: 'Cool', itemsCount: response.results.length}});
             })
             .catch((error) => {
                 console.log('error ' + error);
             })
     }, []);
 
-    console.log(config)
+    console.log(item)
 
     let loading = null;
 
@@ -34,17 +42,18 @@ const Cool = () => {
         <>
             <div style={{
                 fontSize: 34,
-                textAlign: "center"
+                textAlign: "center",
+                marginTop:'80px',
             }}>
-                {text}
+{/*                {text}
                 <br/>
                 <input value={text} onChange={(e) => setText(e.target.value)}/>
-                <hr/>
+                <hr/>*/}
                 {loading}
 
                 {
                     data.map(user => (
-                            <User user={user} key={user.id}/>
+                            <User user={user} key={user.trackId}/>
                         )
                     )}
             </div>
@@ -54,21 +63,23 @@ const Cool = () => {
 
 const User = ({user}) => {
     const [isClicked, setIsClicked] = useState(false);
+    const {item, setContextItem} = useContext(AppContext);
 
     const clickHandler = (event) => {
         event.preventDefault();
+        setContextItem({...item,...{name: 'Clicked', item: user}});
         setIsClicked(true)
     };
 
     if (isClicked) {
-        return <Redirect to="/"/>
+        return <Redirect to="/cool_edit"/>
     }
 
     return (
-        <div style={{padding: '20px', border: '1px solid #cccc'}}
+        <div style={{padding: '20px', marginTop:'0px', border: '1px solid #cccc'}}
              onClick={(e) => clickHandler(e)}>
 
-            {user.id} - {user.name} - {user.pass}
+            {user.trackName} - {user.releaseDate.split('-')[0]} - {user.primaryGenreName}
 
         </div>
     )

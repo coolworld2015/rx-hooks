@@ -37,10 +37,20 @@ const Users = () => {
     const [count, setCount] = useState(0);
 
     const getUsers = () => {
-        fetch('http://ui-base.herokuapp.com/api/users/get')
+        //fetch('http://ui-base.herokuapp.com/api/users/get')
+        fetch('https://itunes.apple.com/search?media=movie'
+            + '&term= marvel', {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
             .then((response) => response.json())
             .then(users => {
-                console.log(users);
+                console.log(users.results);
+                let data = users.results;
+                users = data;
                 dispatch({ type: 'GET_USERS', users })
             })
             .catch((error) => {
@@ -130,7 +140,7 @@ const UsersList = () => {
 
     return (
         users.map(user => (
-            <User user={user} key={user.id}/>
+            <User user={user} key={user.trackId}/>
         ))
     )
 };
@@ -171,7 +181,7 @@ const User = ({ user }) => {
              onClick={(e) => goUserEdit(e)}>
 
 
-            {user.id} - {user.name} - {user.pass}
+            {user.trackName} - {user.trackName}
 
             <button style={{ padding: '10px', marginLeft: '10px' }}
                     onClick={() => goAddUser()}>x</button>

@@ -50,7 +50,7 @@ const CustomPaginationActionsTable = () => {
         setName(e.target.value);
         arr = items.filter((item) => {
 
-            return item.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return item.trackName.toLowerCase().includes(e.target.value.toLowerCase())
         })
 /*        console.log(items)
         console.log(rows)
@@ -60,12 +60,19 @@ const CustomPaginationActionsTable = () => {
     };
 
     const getUsers = () => {
-        fetch('http://ui-base.herokuapp.com/api/items/get')
+        fetch('https://itunes.apple.com/search?media=movie'
+            + '&term=marvel', {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
             .then((response) => response.json())
             .then(users => {
-                console.log(users);
-                setUsers(users)
-                setItems(users)
+                console.log(users.results);
+                setUsers(users.results)
+                setItems(users.results)
             })
             .catch((error) => {
                 console.log('error ', error);
@@ -198,12 +205,12 @@ const CustomPaginationActionsTable = () => {
                                 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : rows
                         ).map(row => (
-                            <TableRow key={row.name} onClick={() => handleUserEdit(row)}>
+                            <TableRow key={row.trackName} onClick={() => handleUserEdit(row)}>
                                 <TableCell component="th" scope="row">
-                                    {row.name}
+                                    {row.trackName}
                                 </TableCell>
-                                <TableCell align="right">{row.phone}</TableCell>
-                                <TableCell align="right">{row.index}</TableCell>
+                                <TableCell align="right">{row.trackName}</TableCell>
+                                <TableCell align="right">{row.trackName}</TableCell>
                             </TableRow>
                         ))}
 

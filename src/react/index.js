@@ -1,5 +1,5 @@
 import React, {useContext, useReducer, useState} from 'react'
-import {BrowserRouter as Router} from 'react-router-dom'
+import {BrowserRouter as Router, Redirect} from 'react-router-dom'
 
 import Routes from './routes';
 
@@ -36,7 +36,7 @@ export const AppContext = React.createContext();
 const UsersApp = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const [item, setItem] = useState({});
+    const [item, setItem] = useState({name:'root', itemsCount:0, size:0});
     const setContextItem = ((item) => {
         return setItem(item);
     });
@@ -44,10 +44,14 @@ const UsersApp = () => {
     return (
         <AppConfig.Provider value={{state, dispatch}}>
             <AppContext.Provider value={{item, setContextItem}}>
-                <Router>
-                    <Header/>
-                    <Routes/>
-                </Router>
+                <div>
+                    <div>
+                        <Header/>
+                    </div>
+                    <Router>
+                        <Routes/>
+                    </Router>
+                </div>
             </AppContext.Provider>
         </AppConfig.Provider>
     )
@@ -57,9 +61,33 @@ export default UsersApp;
 
 const Header = () => {
     const {state, dispatch} = useContext(AppConfig);
+    const {item, setContextItem} = useContext(AppContext);
     const {counter} = state;
+
+    if (item.name === 'CoolEdit' && item.item !== undefined ) {
+        return <div style={{padding: '20px', fontSize: '30px', textAlign: "center", position: 'fixed',
+            width: '100%',
+            background: 'white',
+            marginTop:'-80px',
+            border: '1px solid #cccc'}}>
+            {item.item.trackName}
+        </div>
+    }
+
     return (
-        <div onClick={() => dispatch({ type: "DECREASE_COUNTER" })}>Header - {counter}</div>
+/*        <div onClick={() => dispatch({ type: "DECREASE_COUNTER" })}>
+            Header - {counter} <br />
+            Item - {item.name} <br />
+            ItemsCount - {item.itemsCount}
+        </div>    */
+
+    <div style={{padding: '20px', fontSize: '30px', textAlign: "center", position: 'fixed',
+        width: '100%',
+        background: 'white',
+        marginTop:'-80px',
+        border: '1px solid #cccc'}}>
+            {item.name} ({item.itemsCount})
+        </div>
     )
 };
 
