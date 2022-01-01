@@ -71,6 +71,7 @@ const Header = () => {
             marginTop:'-80px',
             border: '1px solid #cccc'}}>
                 {item.item.trackName}
+
         </div>
     }
 
